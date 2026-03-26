@@ -1,0 +1,13 @@
+services:
+  ollama-proxy:
+    image: nginx:alpine
+    volumes:
+      - ./ollama-proxy.conf:/etc/nginx/templates/default.conf.template:ro
+    ports:
+      - "127.0.0.1:${OLLAMA_PORT}:${OLLAMA_PORT}"
+    environment:
+      - OLLAMA_HOST=${OLLAMA_HOST}
+      - OLLAMA_PORT=${OLLAMA_PORT}
+      - CF_ACCESS_CLIENT_ID=${CF_ACCESS_CLIENT_ID}
+      - CF_ACCESS_CLIENT_SECRET=${CF_ACCESS_CLIENT_SECRET}
+      - NGINX_ENVSUBST_TEMPLATE_ENV=OLLAMA_HOST,OLLAMA_PORT,CF_ACCESS_CLIENT_ID,CF_ACCESS_CLIENT_SECRET
